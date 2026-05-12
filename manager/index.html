@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>קליטת עובד חדש - דף למעסיק</title>
+<style>
+:root {
+  --sky: #9fd0dc;
+  --sky-light: #dff2f6;
+  --grass: #79a928;
+  --grass-dark: #4f7a1f;
+  --yellow: #f2b632;
+  --orange: #ef8f2f;
+  --navy: #1f2638;
+  --teal: #1f7a78;
+  --white: #ffffff;
+  --line: rgba(31, 38, 56, 0.12);
+  --shadow: 0 16px 35px rgba(31, 38, 56, 0.14);
+  --radius: 28px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--navy);
+  background:
+    radial-gradient(circle at top right, rgba(242,182,50,.55) 0 8%, transparent 9% 100%),
+    linear-gradient(180deg, var(--sky-light) 0%, #f6fbf9 42%, #eef7e7 100%);
+}
+.page { max-width: 1040px; margin: 0 auto; padding: 28px 18px 60px; }
+.hero {
+  position: relative; overflow: hidden;
+  background: linear-gradient(145deg, var(--sky) 0%, #c8e9ee 100%);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 34px; padding: 38px 28px 30px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.hero::before {
+  content: ""; position: absolute; top: -70px; left: -70px;
+  width: 190px; height: 190px; border-radius: 50%;
+  background: var(--yellow); box-shadow: 30px 24px 0 var(--orange); opacity: .92;
+}
+.hero::after {
+  content: ""; position: absolute; bottom: -28px; left: 0; right: 0; height: 88px;
+  background:
+    radial-gradient(circle at 18% 50%, var(--grass) 0 28px, transparent 29px),
+    radial-gradient(circle at 83% 35%, var(--grass) 0 35px, transparent 36px),
+    linear-gradient(180deg, transparent 0 38%, var(--grass) 39% 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 820px; margin: 0 auto; }
+.badge {
+  display: inline-block; background: rgba(255,255,255,.75); color: var(--teal);
+  padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 14px; margin-bottom: 16px;
+}
+h1 { margin: 0; font-size: clamp(36px, 7vw, 62px); line-height: 1.06; }
+.subtitle {
+  margin: 18px auto 0; max-width: 760px; font-size: 19px; line-height: 1.85;
+  color: rgba(31,38,56,.82);
+}
+.logo-mark {
+  margin: 24px auto 0; width: 108px; height: 108px; border-radius: 50%;
+  background: rgba(255,255,255,.75); border: 2px solid rgba(255,255,255,.85);
+  display: flex; align-items: center; justify-content: center; font-size: 45px;
+  box-shadow: 0 12px 26px rgba(31,38,56,.14);
+}
+.nav-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.button {
+  display: inline-block; min-width: 220px; padding: 15px 20px; border-radius: 18px;
+  text-decoration: none; color: white; font-weight: 700; font-size: 16px;
+  box-shadow: 0 10px 22px rgba(31,38,56,.16); transition: .15s ease; text-align: center;
+}
+.button:hover { transform: translateY(-2px); }
+.button.green { background: var(--grass-dark); }
+.button.teal { background: var(--teal); }
+
+.section {
+  background: rgba(255,255,255,.92); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 28px; margin-top: 24px; box-shadow: var(--shadow);
+}
+.section h2 { margin: 0 0 12px; font-size: 30px; }
+.section p { margin: 0 0 16px; color: rgba(31,38,56,.75); line-height: 1.8; font-size: 17px; }
+
+.prep-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+.prep-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 20px;
+  min-height: 210px;
+  position: relative;
+}
+.prep-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 76px; height: 76px;
+  border-radius: 0 24px 0 48px;
+  background: rgba(242,182,50,.22);
+}
+.prep-icon { font-size: 34px; margin-bottom: 10px; position: relative; z-index: 1; }
+.prep-card h3 { margin: 0 0 12px; color: var(--teal); font-size: 21px; position: relative; z-index: 1; }
+.clean-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.clean-list li {
+  display: grid; grid-template-columns: auto 1fr; gap: 9px;
+  color: rgba(31,38,56,.76); line-height: 1.65; font-size: 15.7px;
+}
+./* removed custom check */ clean-list li::before { display:none;
+  content: "✓";
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(121,169,40,.18); color: var(--grass-dark);
+  display: flex; align-items: center; justify-content: center; font-weight: 800; margin-top: 1px;
+}
+.notice {
+  margin-top: 20px;
+  background: linear-gradient(135deg, rgba(121,169,40,.16), rgba(159,208,220,.25));
+  border: 1px solid rgba(121,169,40,.24);
+  border-radius: 24px; padding: 18px; line-height: 1.85; font-weight: 700; color: var(--grass-dark);
+}
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.card {
+  background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 18px; min-height: 145px;
+}
+.card .icon { font-size: 32px; margin-bottom: 10px; }
+.card h3 { margin: 0 0 8px; color: var(--teal); font-size: 20px; }
+.card p { margin: 0; color: rgba(31,38,56,.72); line-height: 1.75; font-size: 15.5px; }
+
+.timeline { display: grid; gap: 15px; margin-top: 18px; }
+.step {
+  background: var(--white); border: 1px solid var(--line); border-radius: 24px;
+  padding: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px;
+}
+.num {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--yellow);
+  display: flex; align-items: center; justify-content: center; font-weight: 800;
+}
+.step h3 { margin: 0 0 8px; font-size: 22px; }
+.step ul { margin: 0; padding-right: 20px; color: rgba(31,38,56,.75); line-height: 1.85; font-size: 16px; }
+.footer { text-align: center; color: rgba(31,38,56,.62); font-size: 14px; line-height: 1.7; margin-top: 28px; }
+
+@media (max-width: 820px) {
+  .prep-grid, .cards { grid-template-columns: 1fr; }
+  .step { grid-template-columns: 1fr; }
+  .section { padding: 22px; }
+  .button { width: 100%; }
+}
+
+.day-one-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.day-card {
+  background: linear-gradient(145deg, #ffffff 0%, #eef8fb 100%);
+  border: 1px solid rgba(31, 122, 120, 0.22);
+  border-right: 7px solid var(--teal);
+  border-radius: 24px;
+  padding: 20px;
+  min-height: 165px;
+  box-shadow: 0 8px 18px rgba(31, 122, 120, 0.08);
+}
+
+.day-card.orange {
+  border-right-color: var(--orange);
+  background: linear-gradient(145deg, #ffffff 0%, #fff3e5 100%);
+}
+
+.day-card.green {
+  border-right-color: var(--grass-dark);
+  background: linear-gradient(145deg, #ffffff 0%, #eef8e8 100%);
+}
+
+.day-card.yellow {
+  border-right-color: var(--yellow);
+  background: linear-gradient(145deg, #ffffff 0%, #fff8df 100%);
+}
+
+.day-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.day-top input {
+  width: 22px;
+  height: 22px;
+  margin-top: 4px;
+  accent-color: var(--teal);
+  flex-shrink: 0;
+}
+
+.day-card h3 {
+  margin: 0;
+  font-size: 21px;
+  color: var(--navy);
+}
+
+.day-card p {
+  margin: 0;
+  color: rgba(31,38,56,.76);
+  line-height: 1.75;
+  font-size: 15.8px;
+}
+
+.day-label {
+  display: inline-block;
+  margin-bottom: 12px;
+  background: rgba(31, 122, 120, 0.12);
+  color: var(--teal);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+@media (max-width: 820px) {
+  .day-one-grid { grid-template-columns: 1fr; }
+}
+
+
+.highlight-strip {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.highlight-pill {
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(31,122,120,.18);
+  color: var(--navy);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 10px rgba(31,38,56,.06);
+}
+
+.card, .prep-card, .day-card, .step {
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.card:hover, .prep-card:hover, .day-card:hover, .step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(31,38,56,.12);
+}
+
+.section h2::after {
+  content: "";
+  display: block;
+  width: 68px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--yellow), var(--teal));
+  margin-top: 10px;
+}
+
+
+.logo-mark {
+  font-size: 52px !important;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.prep-icon,
+.card .icon {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--teal);
+  opacity: .92;
+}
+
+.highlight-pill {
+  letter-spacing: .2px;
+  font-size: 13.5px;
+}
+
+
+.site-nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.site-nav a {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.75);
+  color: #1f2638;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid rgba(31,38,56,.12);
+}
+.site-nav a:hover { transform: translateY(-1px); }
+
+</style>
+</head>
+<body>
+<main class="page">
+
+    <nav class="site-nav">
+      <a href="../index.html">עמוד הבית</a>
+      <a href="../manager/index.html">דף למעסיק</a>
+      <a href="../new-worker/index.html">דף לעובד החדש</a>
+    </nav>
+    
+  <section class="hero">
+    <div class="hero-content">
+      <span class="badge">עיריית לוד · האגף לשילוב חברתי</span>
+      <h1>קליטת עובד חדש מתחילה עוד לפני היום הראשון</h1>
+      <p class="subtitle">
+        דף קצר למנהל/ת הקולט/ת, שמרכז את הדברים החשובים לקראת כניסה נעימה, מסודרת ומקצועית של עובד חדש לאגף.
+      </p>
+      
+      <div class="highlight-strip">
+        <div class="highlight-pill">◆ תחושת שייכות</div>
+        <div class="highlight-pill">◈ בהירות וציפיות</div>
+        <div class="highlight-pill">● למידה הדרגתית</div>
+      </div>
+
+      <div class="logo-mark">◉</div>
+    
+      <div class="nav-buttons">
+        <a class="button green" href="#prep">היערכות לקליטה</a>
+        <a class="button teal" href="#day-one">יום הקליטה</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>מה חשוב למנהל/ת לזכור?</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">◆</div>
+        <h3>תחושת שייכות</h3>
+        <p>לקבל את העובד בחום ולייצר תחושה שחיכו לו ושיש לו מקום באגף.</p>
+      </div>
+      <div class="card">
+        <div class="icon">◈</div>
+        <h3>בהירות וציפיות</h3>
+        <p>להגדיר תפקיד, שעות עבודה, נהלים, תחומי אחריות וכתובת לשאלות.</p>
+      </div>
+      <div class="card">
+        <div class="icon">✦</div>
+        <h3>למידה הדרגתית</h3>
+        <p>להימנע מהצפה ולבנות תהליך קליטה שמתקדם בשלבים.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="prep">
+    <h2>היערכות לקליטה</h2>
+    <p>
+      כמה פעולות קטנות לפני ההגעה יכולות לעשות הבדל גדול: לצמצם בלבול, לשדר סדר,
+      ולתת לעובד החדש תחושה שחיכו לו ויש לו מקום.
+    </p>
+
+    <div class="prep-grid">
+      <div class="prep-card">
+        <div class="prep-icon">◌</div>
+        <h3>תקשורת ושמירה על קשר</h3>
+        <ul class="clean-list">
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>סגירת תאריך עם משאבי אנוש למועד הגעת העובד לחתימה על החוזה בעירייה.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>שמירה על קשר ועדכון העו״ס על מועד תחילת העבודה.</span></li>
+        </ul>
+      </div>
+
+      <div class="prep-card">
+        <div class="prep-icon">◎</div>
+        <h3>הכנת הצוות לקליטה</h3>
+        <ul class="clean-list">
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>עדכון הצוות על הצטרפות העובד החדש ותאריך ההגעה לאגף.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>ניתן לשלוח מייל עם שם מלא, תפקיד, תאריך התחלה ופרטים ראשוניים רלוונטיים נוספים.</span></li>
+        </ul>
+      </div>
+
+      <div class="prep-card">
+        <div class="prep-icon">⬢</div>
+        <h3>הכנת סביבת העבודה</h3>
+        <ul class="clean-list">
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>סידור פיזי של עמדת העבודה: שולחן, מחשב ומספר טלפון נייד.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>ציוד משרדי אישי ויוזר למייל — באחריות / מענה של אתי טליאס.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>הסדרת הרשאות כניסה למערכות פרפר ו־Teams — דרך בת אל או המחליפה שלה.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>לפני מועד ההגעה: להניח על השולחן שלט/פתק “ברוכים הבאים”, כמה סוכריות, מחברת של האגף ועט.</span></li>
+        </ul>
+      </div>
+
+      <div class="prep-card">
+        <div class="prep-icon">◈</div>
+        <h3>תיאום ותיווך</h3>
+        <ul class="clean-list">
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>תיווך מול מנגנון משאבי אנוש בכל מה שנדרש להשלמת תהליך הקליטה.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>בחירת חונך/ת או עובד/ת מלווה לתקופת ההסתגלות.</span></li>
+          <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>הכנת דף טלפונים חשובים לעובד החדש.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="notice">
+      המטרה היא לא להעמיס, אלא ליצור התחלה בטוחה ונעימה: קשר ברור, צוות מוכן, עמדת עבודה מסודרת וכתובת מלווה.
+    </div>
+  </section>
+
+
+  <section class="section" id="day-one">
+    <h2>יום הקליטה / היום הראשון</h2>
+    <p>
+      אחרי שהבסיס מוכן, היום הראשון נועד לייצר חוויה חמה, ברורה ומחברת.
+      זה השלב שבו העובד החדש פוגש את האגף בפועל, ולכן חשוב לשלב בין קבלת פנים אישית לבין התמצאות ראשונית.
+    </p>
+
+    <div class="day-one-grid">
+      <div class="day-card orange">
+        <span class="day-label">לפני תחילת היום</span>
+        <div class="day-top">
+          <input type="checkbox" />
+          <h3>חיבור לקבוצות ופרסום באגף</h3>
+        </div>
+        <p>
+          לפני הגעת העובד החדש יש לדאוג להוסיף אותו לקבוצת הוואטסאפ האגפית
+          ולפרסם על מסכי האגף הודעה על הצטרפותו.
+        </p>
+      </div>
+
+      <div class="day-card">
+        <span class="day-label">קבלת פנים</span>
+        <div class="day-top">
+          <input type="checkbox" />
+          <h3>קבלת פנים חמה</h3>
+        </div>
+        <p>
+          קבלת פנים על ידי ראש הצוות. אם ראש הצוות לא נמצא,
+          יש להעביר מראש את האחריות לעובד אחר במחלקה שיקבל את העובד החדש.
+        </p>
+      </div>
+
+      <div class="day-card green">
+        <span class="day-label">התמצאות באגף</span>
+        <div class="day-top">
+          <input type="checkbox" />
+          <h3>סיור היכרות באגף</h3>
+        </div>
+        <p>
+          היכרות עם העובדים, החדרים והשירותים הנלווים:
+          מטבחון, חדר ישיבות, ממ״ד ושאר המרחבים החשובים לעבודה היומיומית.
+        </p>
+      </div>
+
+      <div class="day-card yellow">
+        <span class="day-label">השלמה מנהלית</span>
+        <div class="day-top">
+          <input type="checkbox" />
+          <h3>וידוא כרטיס עובד</h3>
+        </div>
+        <p>
+          יש לוודא שהעובד קיבל כרטיס עובד בעירייה מאגף משאבי אנוש,
+          או שנמצא בתהליך ברור לקבלתו.
+        </p>
+      </div>
+    </div>
+
+    <div class="notice">
+      דגש ליום הראשון: המטרה היא לא להספיק הכול, אלא ליצור חוויה ראשונית טובה — העובד יודע לאן הגיע, מי מקבל אותו, ואיפה נמצאים הדברים המרכזיים.
+    </div>
+  </section>
+
+  
+
+  <section class="section" id="next">
+    <h2>המשך התהליך לאחר ההגעה</h2>
+    <p>לאחר שלב ההיערכות, מומלץ להמשיך לפי ציר זמן פשוט וברור.</p>
+
+    <div class="timeline">
+      <div class="step">
+        <div class="num">1</div>
+        <div>
+          <h3>יום הקליטה</h3>
+          <ul>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>קבלת פנים על ידי המנהל הישיר או איש צוות מלווה.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>סיור באגף: עובדים, חדרים, שירותים, מטבחון, חדר ישיבות וממ״ד.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>חיבור ראשוני לכרטיס עובד, קבוצות וואטסאפ, מערכות ופרסום במסכי האגף.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div>
+          <h3>נקודות מעבר מרכזיות</h3>
+          <ul>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>הילה חייט — משאבי אנוש פנימיים ונהלים פנימיים.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>אתי טליאס — ציוד משרדי אישי, יוזר ומייל.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>רפי — נאמן ביטחון, מוגנות וביטחון.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>בת אל או המחליפה שלה — פרפר והרשאות Teams.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div>
+          <h3>היכרות מקצועית וחניכה</h3>
+          <ul>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>שיחה עם המנהל הישיר להבהרת תפקיד, ציפיות, שעות עבודה, דגשים ונהלים.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>הצגת העובד בישיבת הצוות הקרובה.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>ליווי על ידי עובד ותיק / מדריך במהלך החודש הראשון.</span></li>
+            <li style="display:flex; align-items:flex-start; gap:8px;"><input type="checkbox" style="margin-top:4px;"> <span>קביעת פגישה עם מנהלת האגף לאחר חודש, בתיאום מול אתי.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">אגף לשילוב חברתי · עיריית לוד</div>
+</main>
+</body>
+</html>
